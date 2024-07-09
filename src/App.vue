@@ -9,24 +9,27 @@
       <button @click="$store.dispatch('createRaceList')">
         Generate Program
       </button>
-      <button>Start/Pause</button>
+      <button @click="$store.dispatch('toggleRace')">Start/Pause</button>
     </div>
   </header>
-  <div class="flex justify-between mt-5">
-    <HorseList />
-    <RaceProgram />
+  <div class="flex justify-between gap-4 mt-5">
+    <HorseList class="shrink-0" />
+    <RacingField />
+    <RaceProgram class="shrink-0" />
   </div>
 </template>
 
 <script>
 import HorseList from "./components/horseList/HorseList.vue";
 import RaceProgram from "./components/raceProgram/RaceProgram.vue";
+import RacingField from "./components/racingLane/RacingField.vue";
 
 export default {
   name: "App",
   components: {
     HorseList,
     RaceProgram,
+    RacingField,
   },
 };
 </script>
