@@ -2,24 +2,31 @@
   <header
     class="flex justify-between items-center gap-3 w-full h-16 p-3 bg-red-400"
   >
-    <h1 class="text-lg sm:text-2xl font-bold shrink-0">Horse Racing</h1>
+    <h1 class="text-lg sm:text-2xl font-bold shrink-0">
+      Horse Racing <font-awesome-icon :icon="['fas', 'horse']" />
+    </h1>
     <div class="flex gap-1">
-      <button>Generate Program</button>
+      <button @click="$store.dispatch('createRaceList')">
+        Generate Program
+      </button>
       <button>Start/Pause</button>
     </div>
   </header>
-  <div>
+  <div class="flex justify-between mt-5">
     <HorseList />
+    <RaceProgram />
   </div>
 </template>
 
 <script>
-import HorseList from "./components/HorseList.vue";
+import HorseList from "./components/horseList/HorseList.vue";
+import RaceProgram from "./components/raceProgram/RaceProgram.vue";
 
 export default {
   name: "App",
   components: {
     HorseList,
+    RaceProgram,
   },
 };
 </script>

@@ -24,9 +24,25 @@ export default createStore({
       { name: "Nova", condition: 87, color: "Champagne" },
       { name: "Phoenix", condition: 82, color: "Chocolate" },
     ],
+    raceList: [],
   },
-  mutations: {},
+  mutations: {
+    setRaceList(state, list) {
+      state.raceList = list;
+    },
+  },
   getters: {},
-  actions: {},
+  actions: {
+    createRaceList({ state, commit }) {
+      const horseList = state.horseList;
+
+      commit("setRaceList", []);
+
+      for (let i = 0; i < 10; i++) {
+        let randomIndex = Math.floor(Math.random() * horseList.length);
+        commit("setRaceList", [...state.raceList, horseList[randomIndex]]);
+      }
+    },
+  },
   modules: {},
 });
