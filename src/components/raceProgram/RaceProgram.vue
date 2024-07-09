@@ -2,9 +2,8 @@
   <div class="grid grid-cols-2 w-[30%] bg-slate-200">
     <div>
       <h2 class="bg-blue-400">Program</h2>
-      <div>
+      <div v-if="$store.state.raceList.length > 0">
         <RaceProgramList
-          v-if="$store.state.raceList.length > 0"
           v-for="index in 6"
           :raceProgramList="$store.state.raceList"
           :lap="index"

@@ -7,15 +7,15 @@
     </div>
     <div class="flex flex-col w-full">
       <div class="list-header grid grid-cols-12 w-full">
-        <div class="col-span-4">Position</div>
+        <div class="col-span-4">Lane</div>
         <div class="col-span-8">Name</div>
       </div>
       <div
-        class="list-header grid grid-cols-12 w-full"
-        v-for="horse in raceProgramList"
+        class="grid grid-cols-12 w-full"
+        v-for="{ name, lane } in raceProgramList"
       >
-        <div class="col-span-4">Position</div>
-        <div class="col-span-8">{{ horse.name }}</div>
+        <div class="col-span-4">{{ lane }}</div>
+        <div class="col-span-8">{{ name }}</div>
       </div>
     </div>
   </div>
