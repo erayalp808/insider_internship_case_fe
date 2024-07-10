@@ -1,5 +1,8 @@
 import { createStore } from "vuex";
 
+const MAX_POSITION = 95;
+const LAP_COUNT = 6;
+
 export default createStore({
   state: {
     horseList: [
@@ -25,6 +28,7 @@ export default createStore({
       { name: "Comet", condition: 45, color: "Bay" },
     ],
     raceList: [],
+    resultList: Array.from({ length: LAP_COUNT }, () => []),
     lap: 0,
     isRacePaused: true,
   },
@@ -32,50 +36,85 @@ export default createStore({
     setRaceList(state, list) {
       state.raceList = list;
     },
-    updateHorsePosition(state, name) {
-      const horse = state.raceList.find((horse) => horse.name === name);
-      if (horse) {
-        horse.position += horse.condition * Math.random() * 0.02;
-      }
+    setLap(state, lap) {
+      state.lap = lap;
+    },
+    clearResultList(state) {
+      state.resultList = Array.from({ length: LAP_COUNT }, () => []);
+    },
+    updateResultList(state, { lane, name }) {
+      state.resultList[state.lap - 1].push({ lane, name });
     },
     togglePause(state) {
       state.isRacePaused = !state.isRacePaused;
     },
+    updateHorsePosition(state, name) {
+      const horse = state.raceList.find((horse) => horse.name === name);
+
+      if (horse) {
+        horse.position += horse.condition * Math.random() * 0.02;
+
+        if (horse.position > MAX_POSITION) horse.position = MAX_POSITION;
+      }
+    },
+    resetHorsePositions(state) {
+      state.raceList.forEach((horse) => (horse.position = 0));
+    },
   },
-  getters: {},
+  getters: {
+    getRaceHorseByName: (state) => (name) => {
+      return state.raceList.find((horse) => horse.name === name);
+    },
+  },
   actions: {
     createRaceList({ state, commit }) {
-      const horseList = [...state.horseList];
-      const shuffledHorseList = horseList.sort(() => 0.5 - Math.random());
-
+      if (!state.isRacePaused) commit("togglePause");
+      commit("setLap", 1);
       commit("setRaceList", []);
+      commit("clearResultList");
 
-      shuffledHorseList.slice(0, 10).forEach((horse, index) => {
-        commit("setRaceList", [
-          ...state.raceList,
-          { ...horse, lane: index + 1, position: 0 },
-        ]);
-      });
+      const shuffledHorseList = [...state.horseList].sort(() => 0.5 - Math.random());
+      const raceList = shuffledHorseList
+        .slice(0, 10)
+        .map((horse, index) => ({ ...horse, lane: index + 1, position: 0 }));
+
+      commit("setRaceList", raceList);
     },
     toggleRace({ state, commit, dispatch }) {
       if (state.raceList.length > 0) {
         commit("togglePause");
+
         if (!state.isRacePaused) dispatch("animateRace");
       }
     },
-    animateRace({ state, commit }) {
+    animateRace({ state, commit, dispatch, getters }) {
       const interval = setInterval(() => {
         let allHorsesFinished = true;
 
-        state.raceList.forEach((horse) => {
-          if (horse.position < 95) {
+        state.raceList.forEach(({ position, name, lane }) => {
+          if (position < MAX_POSITION) {
             allHorsesFinished = false;
-            commit("updateHorsePosition", horse.name);
+
+            commit("updateHorsePosition", name);
+
+            const { position } = getters.getRaceHorseByName(name);
+
+            if (position === MAX_POSITION) {
+              commit("updateResultList", { lane, name });
+            }
           }
         });
 
-        if (allHorsesFinished || state.isRacePaused) {
+        if (state.isRacePaused) clearInterval(interval);
+
+        if (allHorsesFinished) {
           clearInterval(interval);
+
+          if (state.lap < LAP_COUNT && !state.isRacePaused) {
+            commit("setLap", state.lap + 1);
+            commit("resetHorsePositions");
+            dispatch("animateRace");
+          }
         }
       }, 50);
     },

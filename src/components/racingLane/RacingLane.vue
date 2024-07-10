@@ -1,8 +1,6 @@
 <template>
-  <div class="flex w-full grow">
-    <div
-      class="flex flex-col justify-center items-center w-1/12 font-bold text-lg border-2 border-black bg-green-500"
-    >
+  <div class="flex w-full h-16">
+    <div class="flex flex-col justify-center items-center w-1/12 font-bold text-lg border-2 border-black bg-green-500">
       <div>{{ lane }}</div>
       <div class="text-xs">{{ name }}</div>
     </div>
@@ -11,7 +9,7 @@
         v-if="!!name"
         :icon="['fas', 'horse']"
         size="3x"
-        class="horse relative"
+        class="transition-left duration-100 ease-linear relative"
         :style="{ left: position + '%' }"
       />
     </div>
@@ -28,9 +26,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.horse {
-  transition: left 0.1s linear;
-}
-</style>
