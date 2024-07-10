@@ -28,6 +28,7 @@ export default {
 .overflow-y-scroll > div {
   @apply grid grid-cols-3 w-full;
 }
+
 .overflow-y-scroll > div > div {
   @apply text-center p-2 bg-white border border-slate-300 text-sm font-bold;
 }
