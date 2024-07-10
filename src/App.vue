@@ -6,7 +6,7 @@
       <button @click="$store.dispatch('toggleRace')">Start/Pause</button>
     </div>
   </header>
-  <div class="flex justify-between gap-4 mt-5">
+  <div class="flex flex-wrap md:flex-nowrap justify-between gap-4">
     <HorseList />
     <RacingField />
     <RaceProgram />

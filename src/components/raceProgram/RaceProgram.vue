@@ -1,5 +1,5 @@
 <template>
-  <div class="shrink-0 grid grid-cols-2 w-[30%] bg-slate-200">
+  <div class="shrink-0 order-2 flex-grow md:order-none md:flex-grow-0 grid grid-cols-2 w-[30%] bg-slate-200">
     <div>
       <h2 class="bg-blue-400">Program</h2>
       <div v-if="raceList.length > 0">

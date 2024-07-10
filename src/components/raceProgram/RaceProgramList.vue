@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="flex items-center w-full px-3 h-8 bg-red-400">
-      <h2 class="font-bold">
+      <h2 class="text-xs md:text-sm font-bold">
         {{ `Lap ${lap} - ${1000 + 200 * lap}m` }}
       </h2>
     </div>

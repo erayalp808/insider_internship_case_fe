@@ -1,5 +1,5 @@
 <template>
-  <div class="shrink-0 w-[20%] h-full">
+  <div class="shrink-0 order-1 flex-grow md:order-none md:flex-grow-0 w-[20%] h-full">
     <div class="flex items-center w-full px-3 h-12 bg-yellow-300">
       <h2 class="text-lg font-bold">Horse List (1-20)</h2>
     </div>
