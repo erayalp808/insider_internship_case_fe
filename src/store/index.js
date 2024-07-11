@@ -89,6 +89,7 @@ export default createStore({
     },
     animateRace({ state, commit, dispatch, getters }) {
       const interval = setInterval(() => {
+        if (state.isRacePaused) clearInterval(interval);
         let allHorsesFinished = true;
 
         state.raceList.forEach(({ position, name, lane }) => {
@@ -104,8 +105,6 @@ export default createStore({
             }
           }
         });
-
-        if (state.isRacePaused) clearInterval(interval);
 
         if (allHorsesFinished) {
           clearInterval(interval);
