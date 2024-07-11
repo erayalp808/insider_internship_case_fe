@@ -20,6 +20,7 @@ import { mapState } from "vuex";
 import RaceProgramList from "./RaceProgramList.vue";
 
 export default {
+  name: "RaceProgram",
   components: {
     RaceProgramList,
   },
